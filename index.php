@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<?php
+session_start();
+/*echo "<pre>";
+print_r($_SESSION);
+echo "</pre>";
+*/?>
+<script>
+setInterval(function(){eval("debugger;")}, 10);
+</script>
+<html lang="sv">
+<head>
+  <title>Racketkungen</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" enctype="text/plain">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
+    .navbar {
+      margin-bottom: 50px;
+      border-radius: 0;
+    }
+    
+    /* Remove the jumbotron's default bottom margin */ 
+     .jumbotron {
+      margin-bottom: 0;
+    }
+   
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+
+<!--<div class="jumbotron">
+  <div class="container text-center">
+    <h1>Racketkungen</h1>      
+  </div>
+</div>
+-->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Racketkungen</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Store</a></li>
+	<?php
+		if(!empty($_SESSION["name"]))
+			echo '<li><h4 style="color:white;font-size:15px;margin-left:10px;margin-top: 17px;"><span class="glyphicon"></span> Welcome '.$_SESSION["name"].'</h4></li>';
+	?>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+	    <?php
+		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
+			echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
+
+		if(!empty($_SESSION["id"]))
+			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
+		else
+			echo '<li><a href="login.php"><span class="glyphicon glyphicon-user"></span> Login </a></li>';
+		?>
+		<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">    
+<?php
+// sql shit get all products
+
+require("db.php");
+
+$result = mysqli_query($db, "SELECT * FROM products");
+
+//Loop through all rows
+while($row = mysqli_fetch_row($result)){
+	echo utf8_encode('	<div class="col-sm-4"> 
+	      				<div class="panel panel-primary">
+        					<div class="panel-heading">'.$row[1].'</div>
+        					<div class="panel-body"><img src="images/'.$row[5].'" class="img-responsive" style="width:100%" alt="Image"></div>
+        					<div class="panel-footer">'.$row[2].'</div>
+	      				</div>
+					
+				</div>
+	');
+}
+
+?>
+</div>
+<br><br>
+
+<footer class="container-fluid text-center">
+  <p>Racketkungen Copyright</p>  
+  <a href="debug.php">DEBUG <?php echo (!empty($_SESSION["id"])) ? "LOGOUT" : "LOGIN"; ?></a>
+</footer>
+
+</body>
+</html>
