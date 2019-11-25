@@ -1,11 +1,8 @@
 <!DOCTYPE html>
+<html lang="sv">
 <?php
 session_start();
-/*echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-*/?>
-<html lang="sv">
+?>
 <head>
   <title>Racketkungen</title>
   <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" enctype="text/plain">
@@ -30,6 +27,62 @@ echo "</pre>";
       background-color: #f2f2f2;
       padding: 25px;
     }
+	.list-group {
+		width: 20%;
+		float: left;
+		color: black;
+	}
+	.container {
+		padding:30px;
+		//background-color: grey;
+	}
+	.info {
+		padding: 20px;
+		width: 78%;
+		height: 70%;
+		float: right;
+		border: 1px solid #dddddd;
+		border-radius: 8px;
+		color: #dddddd;
+	}
+	.infoleft {
+		width:70%;
+		float: left;
+		color: #dddddd;
+	}
+	.inforight {
+		width:20%;
+		float: right;
+		color: #dddddd;
+	}
+	img {
+		border: 1px solid black;
+		border-radius: 8px;
+	}
+	h4 {
+		color: black;
+	}
+	.button {
+	background:linear-gradient(to bottom, #3379b7 5%, #255680 100%);
+	background-color:#3379b7;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:5px 18px;
+	text-decoration:none;
+	}
+	.button:hover {
+	background:linear-gradient(to bottom, #255680 5%, #3379b7 100%);
+	background-color:#255680;
+	}
+	.button:active {
+	position:relative;
+	top:1px;
+	}
   </style>
 </head>
 <body>
@@ -43,53 +96,50 @@ echo "</pre>";
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Racketkungen</a>
+      <a class="navbar-brand" href="index.php">Racketkungen</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Store</a></li>
-	<?php
-		if(!empty($_SESSION["name"]))
-			echo '<li><h4 style="color:white;font-size:15px;margin-left:10px;margin-top: 17px;"><span class="glyphicon"></span> Welcome '.$_SESSION["name"].'</h4></li>';
-	?>
-      </ul>
       <ul class="nav navbar-nav navbar-right">
 	    <?php
 		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="manage_products.php"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
+			echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
 
 		if(!empty($_SESSION["id"]))
 			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
 		else
 			echo '<li><a href="login.php"><span class="glyphicon glyphicon-user"></span> Login </a></li>';
 		?>
-		<li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<div class="container">    
+<div class="container">
 <?php
 // sql shit get all products
-
 require("db.php");
 
 $result = mysqli_query($db, "SELECT * FROM products");
-
-//Loop through all rows
-while($row = mysqli_fetch_row($result)){
-	echo utf8_encode('	<div class="col-sm-4">
-	      				<div class="panel panel-primary">
-        					<div class="panel-heading">'.$row[1].'</div>
-						<a href="product.php?id='.$row[0].'"><div class="panel-body"><img src="images/'.$row[5].'" class="img-responsive" style="width:100%" alt="Image"></div></a>
-        					<div class="panel-footer">'.$row[2].'</div>
-	      				</div>
-				</div>
-	');
-}
-
-?>
+echo '<ul class="list-group">';
+	while($row = mysqli_fetch_row($result)){
+		echo (' <li class="list-group-item"><a href="manage_productinfo.php?id='.$row[0].'">'.$row[1].'</a></li>');
+	}
+	echo '<li class="list-group-item"><a href="add_product.php" class="button">Add Product</a></li>';
+echo '</ul>';
+?>   
+<div class="info">
+	<div class="infoleft">
+	<img src="" class="img-responsive" style="width:50%" alt="Image">
+	<h4>Quantity:</h4>
+	<h4>Price:</h4>
+	<h4>Description:</h4>
+	</div>
+	
+	<div class="inforight">
+	<a href="#" class="button">Remove Product</a>
+	<h4>Name: X</h4>
+	</div>
+</div>
 </div>
 <br><br>
 

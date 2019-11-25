@@ -56,7 +56,7 @@ echo "</pre>";
       <ul class="nav navbar-nav navbar-right">
 	    <?php
 		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="manage_products.php"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
+			echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
 
 		if(!empty($_SESSION["id"]))
 			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
@@ -79,12 +79,14 @@ $result = mysqli_query($db, "SELECT * FROM products");
 
 //Loop through all rows
 while($row = mysqli_fetch_row($result)){
-	echo utf8_encode('	<div class="col-sm-4">
+	echo utf8_encode('	
+<div class="col-sm-4"> 
 	      				<div class="panel panel-primary">
         					<div class="panel-heading">'.$row[1].'</div>
-						<a href="product.php?id='.$row[0].'"><div class="panel-body"><img src="images/'.$row[5].'" class="img-responsive" style="width:100%" alt="Image"></div></a>
-        					<div class="panel-footer">'.$row[2].'</div>
+        					<div class="panel-body"><img src="images/'.$row[5].'" class="img-responsive" style="width:100%" alt="Image"></div></a>
+<a href="product.php?id="'.$row[0].'">
 	      				</div>
+					
 				</div>
 	');
 }

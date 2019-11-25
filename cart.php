@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <?php
 session_start();
-/*echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
-*/?>
+
+/*if(empty($_GET["user_id"]))
+	header("Location: index.php")
+*/
+//require("db.php");
+
+?>
 <html lang="sv">
 <head>
-  <title>Racketkungen</title>
+  <title>cart</title>
   <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" enctype="text/plain">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -43,7 +46,7 @@ echo "</pre>";
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Racketkungen</a>
+      <a class="navbar-brand" href="index.php">Racketkungen</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -56,7 +59,7 @@ echo "</pre>";
       <ul class="nav navbar-nav navbar-right">
 	    <?php
 		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="manage_products.php"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
+			echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
 
 		if(!empty($_SESSION["id"]))
 			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
@@ -69,29 +72,39 @@ echo "</pre>";
   </div>
 </nav>
 
-<div class="container">    
-<?php
-// sql shit get all products
-
-require("db.php");
-
-$result = mysqli_query($db, "SELECT * FROM products");
-
-//Loop through all rows
-while($row = mysqli_fetch_row($result)){
-	echo utf8_encode('	<div class="col-sm-4">
-	      				<div class="panel panel-primary">
-        					<div class="panel-heading">'.$row[1].'</div>
-						<a href="product.php?id='.$row[0].'"><div class="panel-body"><img src="images/'.$row[5].'" class="img-responsive" style="width:100%" alt="Image"></div></a>
-        					<div class="panel-footer">'.$row[2].'</div>
-	      				</div>
-				</div>
-	');
-}
-
-?>
+<div class="container">
+<div id="cartDiv" style="background-color:grey;padding-left= 200px" align="center" >
+	
+	
+	Här ska vara stå med en länk till säg själv!!
+	<select style="height:26px;width=50px">
+	<?php
+		for($x = 0;$x < 10; $x++ ) {
+			echo "<option>" . $x . "</option>";
+		}
+	?>
+	</select>
+	<button class="login100-form-btn">
+			Remove
+	</button>
+	<br><br>
+<div class="container">
+	<button class="login100-form-btn">
+			A
+	</button>
 </div>
 <br><br>
+</div>
+
+
+</div>
+
+
+
+
+
+
+	
 
 <footer class="container-fluid text-center">
   <p>Racketkungen Copyright</p>  
