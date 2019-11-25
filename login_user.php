@@ -20,7 +20,6 @@ if(!empty($_GET["uname"]) && !empty($_GET["pass"])){
 		$_SESSION["name"] = $row[4];
 		if(!empty($_SESSION["prev"])){
 			header("Location: ".$_SESSION["prev"]);
-			$_SESSION["prev"] = "";
 		}else
 			header("Location: index.php");
 	}else{

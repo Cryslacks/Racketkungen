@@ -1,3 +1,3 @@
 <?php
-$db = mysqli_connect("localhost", "racketkungen", "racketkungen", "racketkungen");
+$db = mysqli_connect("cryslacks.win", "racketkungen", "racketkungen", "racketkungen");
 ?>
