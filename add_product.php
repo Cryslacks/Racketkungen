@@ -32,7 +32,6 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
-				<a href="manage_products.php" style="margin-left: -40px;position: relative;top: -50px;padding: 5px;background-color:#4272d7;color:white">Back</a>
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-33">
 						Add Product
@@ -74,6 +73,10 @@
 							Submit
 						</button>
 					</div>
+					<div class="text-center">
+						<a href="manage_products.php" class="txt2 hov1">
+							Back
+						</a>
 					 <?php
                                                 session_start();
                                                 if(!empty($_SESSION["failed"])){

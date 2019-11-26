@@ -37,9 +37,9 @@ session_start();
 		//background-color: grey;
 	}
 	.info {
-		padding: 20px;
+		padding: 25px;
 		width: 78%;
-		height: 70%;
+		height: 640px;
 		float: right;
 		border: 1px solid #dddddd;
 		border-radius: 8px;
@@ -56,7 +56,7 @@ session_start();
 		color: #dddddd;
 	}
 	img {
-		border: 1px solid black;
+		border: 1px solid #dddddd;
 		border-radius: 8px;
 	}
 	h4 {
@@ -93,26 +93,9 @@ session_start();
   </div>
 </div>
 -->
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">Racketkungen</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-	    <?php
-		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="#"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
-
-		if(!empty($_SESSION["id"]))
-			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
-		else
-			echo '<li><a href="login.php"><span class="glyphicon glyphicon-user"></span> Login </a></li>';
-		?>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php
+	require('header.php');
+?>
 
 <div class="container">
 <?php
@@ -129,7 +112,7 @@ echo '</ul>';
 ?>   
 <div class="info">
 	<div class="infoleft">
-	<img src="" class="img-responsive" style="width:50%" alt="Image">
+	<img src="images/questionmark.jpg" class="img-responsive" style="width:60%;" alt="Image">
 	<h4>Quantity:</h4>
 	<h4>Price:</h4>
 	<h4>Description:</h4>
@@ -145,7 +128,6 @@ echo '</ul>';
 
 <footer class="container-fluid text-center">
   <p>Racketkungen Copyright</p>  
-  <a href="debug.php">DEBUG <?php echo (!empty($_SESSION["id"])) ? "LOGOUT" : "LOGIN"; ?></a>
 </footer>
 
 </body>

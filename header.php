@@ -37,7 +37,7 @@ session_start();
       <ul class="nav navbar-nav navbar-right">
 	    <?php
 		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="manage_products.php"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
+			echo '<li><a href="manage_productinfo.php?id=1"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
 
 		if(!empty($_SESSION["id"]))
 			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';

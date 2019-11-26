@@ -53,9 +53,9 @@ if($result->num_rows > 0){
 		//background-color: grey;
 	}
 	.info {
-		padding: 20px;
+		padding: 25px;
 		width: 78%;
-		height: 70%;
+		height: 640px;
 		float: right;
 		border: 1px solid #dddddd;
 		border-radius: 8px;
@@ -109,26 +109,9 @@ if($result->num_rows > 0){
   </div>
 </div>
 -->
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">Racketkungen</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-	    <?php
-		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="manage_products.php"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
-
-		if(!empty($_SESSION["id"]))
-			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
-		else
-			echo '<li><a href="login.php"><span class="glyphicon glyphicon-user"></span> Login </a></li>';
-		?>
-      </ul>
-    </div>
-  </div>
-</nav>
+<?php
+	require('header.php');
+?>
 
 <div class="container">
 <?php
@@ -151,9 +134,9 @@ echo '</ul>';
 	<h4>Description: <?php echo utf8_encode($product['desc']);?></h4>
 	</div>	
 	<div class="inforight">
-	<?php
-	echo '<a href="delete.php?id='.$row[0].'>'.$row[1].'" class="button">Remove Product</a>';
-	?>
+	
+	<a href="delete.php?id=<?php echo $product['id'];?>" onclick="return confirm('Ta bort produkt?')" class="button">Remove Product</a>
+	
 	<h4>Name: <?php echo $product['name']; ?></h4>
 	</div>
 </div>
@@ -162,7 +145,6 @@ echo '</ul>';
 
 <footer class="container-fluid text-center">
   <p>Racketkungen Copyright</p>  
-  <a href="debug.php">DEBUG <?php echo (!empty($_SESSION["id"])) ? "LOGOUT" : "LOGIN"; ?></a>
 </footer>
 
 </body>
