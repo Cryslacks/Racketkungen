@@ -18,7 +18,7 @@ if($result->num_rows > 0){
 	$product["pic"]   = $row["picture"];
 }
 ?>
-<html lang="sv">
+<html lang="sv" style="height:100%">
 <head>
   <title>Racketkungen <?php echo "- ".$product["name"];?></title>
   <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" enctype="text/plain">
@@ -27,14 +27,14 @@ if($result->num_rows > 0){
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.7.0/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body style="position:relative;height:100%">
 
 <?php
   require("header.php");
 ?>
 
 <div class="container">
-<div class="col-sm">
+<div class="col-sm" style="margin-bottom: 70px">
 	<div class="panel panel-primary">
 		<div class="panel-heading"><?php echo $product['name'];?></div>
        		<div class="panel-body">
@@ -63,15 +63,9 @@ if($result->num_rows > 0){
 </div>
 <br><br>
 
-<footer class="container-fluid text-center">
+<footer class="container-fluid text-center" style="position:absolute;bottom:0px;width:100%">
   <p>Racketkungen Copyright</p>
   <a href="debug.php">DEBUG <?php echo (!empty($_SESSION["id"])) ? "LOGOUT" : "LOGIN"; ?></a>
 </footer>
-<?php
-echo "<pre>";
-print_r($product);
-echo "</pre>";
-
-?>
 </body>
 </html>

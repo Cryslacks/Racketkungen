@@ -32,6 +32,9 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+				<div class="text-left">
+					<a href="manage_products.php" class="txt2 hov1" style="margin-left: -40px;position: relative;top: -50px;padding: 5px;background-color:white;color:blue">Back</a>
+				</div>
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-33">
 						Add Product
@@ -44,7 +47,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Description is required">
-						<input class="input100" type="text" name="desc" placeholder="Description">
+						<input class="input100" type="text" name="desc" placeholder="Description" accept-charset="UTF-8">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
@@ -62,7 +65,7 @@
 					</div>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate="Picture name is required">
-						<input class="input100" type="text" name="pic" placeholder="Picture Name">
+						<input class="input100" type="file" name="filetoupload" placeholder="Picture Name">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
@@ -73,10 +76,6 @@
 							Submit
 						</button>
 					</div>
-					<div class="text-center">
-						<a href="manage_products.php" class="txt2 hov1">
-							Back
-						</a>
 					 <?php
                                                 session_start();
                                                 if(!empty($_SESSION["failed"])){

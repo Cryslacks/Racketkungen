@@ -35,14 +35,14 @@ if(empty($_SESSION["id"])){
 			$id = mysqli_fetch_assoc($res)["cart_id"];
 		}
 
-		$res = mysqli_query($db, "SELECT * FROM items WHERE cart_id='". $id ."' AND product_id='". $_GET["id"] ."'");
+		$res = mysqli_query($db, "SELECT * FROM items WHERE cart_id='". $id ."' AND product_id='". $_GET["id"] ."' AND active=1");
 
 		if($res->num_rows > 0){
 			$item_info = mysqli_fetch_assoc($res);
 
 			$res = mysqli_query($db, "SELECT * FROM products WHERE product_id='". $_GET["id"] ."'");
 			$q = mysqli_fetch_assoc($res)["pquantity"];
-			
+
 			$quantity = intval($_GET["quantity"])+intval($item_info["quantity"]);
 
 			if($quantity > $q)
@@ -50,14 +50,20 @@ if(empty($_SESSION["id"])){
 
 			$res = mysqli_query($db, "UPDATE items SET quantity='".$quantity."' WHERE cart_id='".$id."' AND product_id='".$_GET["id"]."'");
 		}else{
-			$res = mysqli_query($db, "SELECT * FROM products WHERE product_id='". $_GET["id"] ."'");
-			$q = mysqli_fetch_assoc($res)["pquantity"];
+			$res = mysqli_query($db, "SELECT * FROM items WHERE cart_id='". $id ."' AND product_id='". $_GET["id"] ."' AND active=0");
 
-			$quantity = $_GET["quantity"];
-			if($quantity > $q)
-				$quantity = $q;
+			if($res->num_rows > 0){
+				$res = mysqli_query($db, "UPDATE items SET quantity='".$_GET["quantity"]."',active='1' WHERE cart_id='".$id."' AND product_id='".$_GET["id"]."'");
+			} else {
+				$res = mysqli_query($db, "SELECT * FROM products WHERE product_id='". $_GET["id"] ."'");
+				$q = mysqli_fetch_assoc($res)["pquantity"];
 
-			$res = mysqli_query($db, "INSERT INTO items (cart_id, product_id, quantity, active, price) VALUES (".$id.", ".$_GET["id"].", ".$quantity.", 1, ".$_GET["price"].")");	
+				$quantity = $_GET["quantity"];
+				if($quantity > $q)
+					$quantity = $q;
+
+				$res = mysqli_query($db, "INSERT INTO items (cart_id, product_id, quantity, active, price) VALUES (".$id.", ".$_GET["id"].", ".$quantity.", 1, ".$_GET["price"].")");	
+			}
 		}
 	}
 

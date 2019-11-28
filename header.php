@@ -63,7 +63,7 @@ session_start();
                 }
 
                 if($cart_found == 1){
-                    $q = mysqli_fetch_row(mysqli_query($db, "SELECT COUNT(*) FROM items WHERE cart_id='".$id."'"))[0];
+                    $q = mysqli_fetch_row(mysqli_query($db, "SELECT COUNT(*) FROM items WHERE cart_id='".$id."' AND active='1'"))[0];
                     if($q > 0)
                       echo '<p style="color:white;background-color:red;width:20px;display:inline;padding:4px;padding-right:5px;margin-left:3px;border-radius:5px;text-align:center;">'.$q.'</p>';
                 }

@@ -32,7 +32,9 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
-<a href="index.php" style="margin-left: -40px;position: relative;top: -50px;padding: 5px;background-color:#4272d7;color:white">Back</a>
+				<div class="text-left">
+					<a href="index.php" class="txt2 hov1" style="margin-left: -40px;position: relative;top: -50px;padding: 5px;background-color:white;color:blue">Back</a>
+				</div>
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-33">
 						Account Login

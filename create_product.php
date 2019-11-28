@@ -9,7 +9,8 @@ if(!empty($_GET["name"]) && !empty($_GET["desc"]) && !empty($_GET["price"]) && !
 
 	if($result->num_rows < 1){
 		// prod_id, pname, desc, price, quantity, picture
-		$result = mysqli_query($db, "INSERT INTO products(pname, description, pprice, pquantity, picture) VALUES ('".$_GET["name"]."','".$_GET["desc"]."','".$_GET["price"]."','".$_GET["quant"]."','".$_GET["pic"]."')");
+		$desc = utf8_decode($_GET["desc"]);
+		$result = mysqli_query($db, "INSERT INTO products(pname, description, pprice, pquantity, picture) VALUES ('".$_GET["name"]."','$desc','".$_GET["price"]."','".$_GET["quant"]."','".$_GET["pic"]."')");
 		header("Location: manage_products.php");
 	}else{
 		$_SESSION["failed"] = 1;
