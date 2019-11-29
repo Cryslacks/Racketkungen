@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	echo $_SESSION["id"];
 	if(empty($_SESSION["id"])){
 			header("Location: login.php");
 	}else{
@@ -95,29 +94,40 @@
 											<?php
 													$res = mysqli_query($db, "SELECT * FROM items WHERE cart_id='".$id."'");
 													if($res->num_rows < 1){
-														echo 'tom lista';
+														echo 'Du har inget i din korg';
 													}else{
-														echo 'finns något i listan';
-													}
-													while($row = $res->fetch_assoc()){
-														if($row["active"] == 1){
-															$prod_id = $row["product_id"];
-															$res2 = mysqli_query($db, "SELECT * FROM products WHERE product_id='".$prod_id."'");
-															if($res2->num_rows > 0){
-																$row2 = mysqli_fetch_assoc($res2);
+														$total = 0;
+														while($row = $res->fetch_assoc()){
+															if($row["active"] == 1){
+																$prod_id = $row["product_id"];
+																$res2 = mysqli_query($db, "SELECT * FROM products WHERE product_id='".$prod_id."'");
+																if($res2->num_rows > 0){
+																	$row2 = mysqli_fetch_assoc($res2);
 
+																}
+
+																$total += $row[price]*$row[quantity];
+																		echo '<tr>
+																			<td style="width:75px">  <img src="images/'.$row2["picture"].'" class="img-responsive" alt="Image" Style="scale:5%"/></td>
+																			<td style="padding-top: 25px;">'.$row2["pname"]. '</td>
+																			<td style="padding-top: 25px;">'.($row2["pquantity"] > 1 ? 'In stock' : 'Out of stock').'</td>
+																			<td style="width:30px; padding-top: 20px;"><input class="form-control" type="number" value='.$row["quantity"]. '></td>
+																			<td class="text-right" style="padding-top: 25px;">'.$row[price] * $row[quantity].' kr</td>
+																			<td  class="text-right" style="padding-top: 25px;"><a href="remFromCart.php?cart_id='.$id.'&p_id='.$prod_id.'" <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button></a> </td>
+																		</tr>';
 															}
-
-
-																	echo '<tr>
-																		<td style="width:75px">  <img src="images/'.$row2["picture"].'" class="img-responsive" alt="Image" Style="scale:5%"/></td>
-																		<td style="padding-top: 25px;">'.$row2["pname"]. '</td>
-																		<td style="padding-top: 25px;">'.($row2["pquantity"] > 1 ? 'In stock' : 'Out of stock').'</td>
-																		<td style="width:30px; padding-top: 20px;"><input class="form-control" type="number" value='.$row["quantity"]. '></td>
-																		<td class="text-right" style="padding-top: 25px;">'.$row[price] * $row[quantity].' kr</td>
-																		<td  class="text-right" style="padding-top: 25px;"><a href="remFromCart.php?cart_id='.$id.'&p_id='.$prod_id.'" <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button></a> </td>
-																	</tr>';
 														}
+
+														echo '<tr style="border-top: 1px solid black">
+																			<td style="width:75px">  </td>
+																			<td style="padding-top: 25px;"></td>
+																			<td style="padding-top: 25px;"></td>
+																			<td style="width:30px; padding-top: 20px;">
+</td>
+																			<td class="text-right" style="padding-top: 25px;width: 150px
+                       ">Total: '.$total.' kr</td>
+																			<td class="text-right" style="padding-top: 25px;"></td>
+																		</tr>';
 													}
 												?>
 
@@ -128,10 +138,10 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continue Shopping</button>
+                    <a href="index.php" <button class="btn btn-block btn-light">Continue Shopping</button></a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                    <a href="checkOut.php" <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button></a>
                 </div>
             </div>
         </div>

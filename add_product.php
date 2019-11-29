@@ -65,7 +65,7 @@
 					</div>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate="Picture name is required">
-						<input class="input100" type="file" name="filetoupload" placeholder="Picture Name">
+						<input class="input100" type="text" name="filetoupload" placeholder="Picture Name">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
