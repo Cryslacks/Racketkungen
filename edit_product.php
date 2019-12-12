@@ -1,7 +1,24 @@
 <!DOCTYPE html>
+<?php
+session_start();
+
+require("db.php");
+$result = mysqli_query($db, "SELECT * FROM products WHERE product_id='".$_GET["id"]."'");
+
+if($result->num_rows > 0){
+	$row = mysqli_fetch_assoc($result);
+	$product["id"]    = $row["product_id"];
+	$product["name"]  = $row["pname"];
+	$product["desc"]  = $row["description"];
+	$product["price"] = $row["pprice"];
+	$product["q"] 	  = $row["pquantity"];
+	$product["pic"]   = $row["picture"];
+}
+
+?>
 <html lang="en">
 <head>
-	<title>Add product</title>
+	<title>Edit Product</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -28,7 +45,7 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	<form action="create_product.php" method="post" enctype="multipart/form-data"> 
+	<form action="create_edit.php" method="post" enctype="multipart/form-data"> 
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
@@ -37,53 +54,59 @@
 				</div>
 				<form class="login100-form validate-form">
 					<span class="login100-form-title p-b-33">
-						Add Product
+						Edit Product
 					</span>
 
 					<div class="wrap-input100 rs1 validate-input" data-validate="Product name is required">
-						<input class="input100" type="text" name="name" placeholder="Name">
+						<input class="input100" type="text" name="ename" placeholder="Product Name" value="<?php echo $product['name']; ?>">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Description is required">
-						<input class="input100" type="text" name="desc" placeholder="Description">
+						<input class="input100" type="text" name="edesc" placeholder="Description" value="<?php echo utf8_encode($product['desc']);?>">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
 
 					<div class="wrap-input100 rs1 validate-input" data-validate="Price is required">
-						<input class="input100" type="text" name="price" placeholder="Price">
+						<input class="input100" type="text" name="eprice" placeholder="Price" value="<?php echo utf8_encode($product['price']);?>">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate="Quantity is required">
-						<input class="input100" type="text" name="quant" placeholder="Quantity">
+						<input class="input100" type="text" name="equant" placeholder="Quantity" value="<?php echo $product['q']; ?>">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
 					
 					<div class="wrap-input100 rs1 validate-input" data-validate="Quantity is required">
 						<br>
-						<input class="input100" type="file" name="file">
+						<input class="input100" type="file" name="file" placeholder="file">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>
+					
+					<div class="wrap-input100 rs1 validate-input" data-validate="Product ID is required">
+						<input class="input100" type="hidden" name="eid" placeholder="Product ID" value="<?php echo $product['id'];?>">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+
 
 					<div class="container-login100-form-btn m-t-20">
 						<button class="login100-form-btn">
 							Submit
 						</button>
 					</div>
-					
 					 <?php
                                                 session_start();
                                                 if(!empty($_SESSION["failed"])){
 							if($_SESSION["failed"] == 1){
                                                         	echo '  <div class="text-center" style="margin-top: 10px;">
                                                                         	<span class="txt1" style="color:red">
-                                                                        	    Product name already exists!
+                                                                        	    Username already in use!
                                                                 	        </span>
                                                          	       </div>';
 

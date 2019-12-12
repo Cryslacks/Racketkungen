@@ -24,27 +24,27 @@ session_start();
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="index.php">Racketkungen</a>
+      <a class="navbar-brand" onclick="openTab('index')" style="cursor:pointer">Racketkungen</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="index.php">Store</a></li>
+        <li class="active"><a onclick="openTab('index')" style="cursor:pointer">Store</a></li>
 	<?php
 		if(!empty($_SESSION["name"]))
-			echo '<li><h4 style="color:white;font-size:15px;margin-left:10px;margin-top: 17px;"><span class="glyphicon"></span> Welcome '.$_SESSION["name"].'</h4></li>';
+			echo '<li><h4 style="color:white;font-size:15px;margin-left:10px;margin-top: 17px;cursor:default"><span class="glyphicon"></span> Welcome '.$_SESSION["name"].'</h4></li>';
 	?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 	    <?php
 		if(!empty($_SESSION["rank"]) && $_SESSION["rank"] == 2)
-			echo '<li><a href="manage_productinfo.php?id=1"><span class="glyphicon glyphicon-user"></span> Manage Products </a></li>';
+			echo '<li><a onclick="openTab(`manage`)" style="cursor:pointer"><span class="glyphicon glyphicon-cog"></span> Manage Products </a></li>';
 
 		if(!empty($_SESSION["id"]))
-			echo '<li><a href="logout.php"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
+			echo '<li><a onclick="logout()" style="cursor:pointer"><span class="glyphicon glyphicon-user"></span> Logout</a></li>';
 		else
-			echo '<li><a href="login.php"><span class="glyphicon glyphicon-user"></span> Login </a></li>';
+			echo '<li><a onclick="openTab(`login`)" style="cursor:pointer"><span class="glyphicon glyphicon-user"></span> Login </a></li>';
 		?>
-        <li><a href="cart.php"><span class="glyphicon glyphicon-shopping-cart"></span> Cart 
+        <li><a onclick="openTab(`cart`)" style="cursor:pointer"><span class="glyphicon glyphicon-shopping-cart"></span> Cart 
         <?php
 
         require("db.php");

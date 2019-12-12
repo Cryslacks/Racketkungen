@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if(empty($_SESSION["id"])){
-			header("Location: login.php");
+		echo "error_need_login";
 	}else{
 		require("db.php");
 		$res = mysqli_query($db, "SELECT * FROM carts WHERE user_id='".$_SESSION["id"]."'");
@@ -26,55 +26,9 @@
 			$res = mysqli_query($db, "INSERT INTO carts (user_id) VALUES (".$_SESSION["id"].")");
 			$res = mysqli_query($db, "SELECT * FROM carts WHERE user_id='". $_SESSION["id"]."'");
 			$id = mysqli_fetch_assoc($res)["cart_id"];
-	}
+		}
 	}
 ?>
-
-
-<html lang="sv">
-<head>
-  <title>cart</title>
-  <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1" enctype="text/plain">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-
-    /* Remove the jumbotron's default bottom margin */
-     .jumbotron {
-      margin-bottom: 0;
-    }
-
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
-</head>
-<body>
-
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<?php
-	require("header.php");
-
- ?>
-<!--<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">E-COMMERCE CART</h1>
-     </div>
-</section>-->
-
 <div class="container mb-4">
     <div class="row">
         <div class="col-12">
@@ -97,6 +51,7 @@
 														echo 'Du har inget i din korg';
 													}else{
 														$_SESSION["cart_total"] = 0;
+														$i = 0;
 														while($row = $res->fetch_assoc()){
 															if($row["active"] == 1){
 																$prod_id = $row["product_id"];
@@ -107,15 +62,16 @@
 																}
 
 																$_SESSION["cart_total"] += $row[price]*$row[quantity];
-																		echo '<tr>
+																		echo '<tr id="product-'.$prod_id.'">
 																			<td style="width:75px"> <a href="product.php?id='.$prod_id.'"> <img src="images/'.$row2["picture"].'" class="img-responsive" alt="Image" Style="scale:5%"/> </a> </td>
 																			<td style="padding-top: 25px;"> <a href="product.php?id='.$prod_id.'">'.$row2["pname"]. '</a> </td>
 																			<td style="padding-top: 25px;">'.($row2["pquantity"] > 1 ? 'In stock' : 'Out of stock').'</td>
-																			<td style="width:30px; padding-top: 20px;"><input class="form-control" type="number" value='.$row["quantity"]. '></td>
-																			<td class="text-right" style="padding-top: 25px;">'.$row[price] * $row[quantity].' kr</td>
-																			<td  class="text-right" style="padding-top: 25px;"><a href="remFromCart.php?cart_id='.$id.'&p_id='.$prod_id.'" <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button></a> </td>
+																			<td style="width:30px; padding-top: 20px;"><input class="form-control" type="number" min="1" value='.$row["quantity"]. ' onchange="update_items_in_cart('.$prod_id.', '.$id.', `qchange'.$i.'`)" id="qchange'.$i.'"></td>
+																			<td class="text-right" style="padding-top: 25px;" id="product-'.$prod_id.'-price">'.$row[price] * $row[quantity].' kr</td>
+																			<td  class="text-right" style="padding-top: 25px;"><a onclick="rem_from_cart('.$id.','.$prod_id.')" <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button></a> </td>
 																		</tr>';
 															}
+															$i++;
 														}
 
 														echo '<tr style="border-top: 1px solid black">
@@ -125,11 +81,10 @@
 																			<td style="width:30px; padding-top: 20px;">
 </td>
 																			<td class="text-right" style="padding-top: 25px;width: 150px
-                       ">Total: '.$_SESSION["cart_total"].' kr</td>
+                       " id="cart_total">Total: '.$_SESSION["cart_total"].' kr</td>
 																			<td class="text-right" style="padding-top: 25px;"></td>
 																		</tr>';
 													}
-
 												?>
 
                     </tbody>
@@ -139,10 +94,10 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <a href="index.php" <button class="btn btn-block btn-light">Continue Shopping</button></a>
+                    <a onclick="openTab('index')" <button class="btn btn-block btn-light">Continue Shopping</button></a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <a href="checkOut.php" <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button></a>
+                    <a onclick="order_items(<?php echo $id;?>)" <button class="btn btn-lg btn-block btn-success text-uppercase">Place order</button></a>
                 </div>
             </div>
         </div>

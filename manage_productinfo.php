@@ -48,6 +48,7 @@ if($result->num_rows > 0){
 		float: left;
 		color: black;
 	}
+	
 	.container {
 		padding:30px;
 		//background-color: grey;
@@ -121,7 +122,11 @@ require("db.php");
 $result = mysqli_query($db, "SELECT * FROM products");
 echo '<ul class="list-group">';
 	while($row = mysqli_fetch_row($result)){
-		echo (' <li class="list-group-item"><a href="manage_productinfo.php?id='.$row[0].'">'.$row[1].'</a></li>');
+		if($product["id"] == $row[0]){
+			echo (' <li class="list-group-item active" style="background-color:white;"><a href="manage_productinfo.php?id='.$row[0].'">'.$row[1].'</a></li>');	
+		}else{
+			echo (' <li class="list-group-item"><a href="manage_productinfo.php?id='.$row[0].'">'.$row[1].'</a></li>');
+		}
 	}
 	echo '<li class="list-group-item"><a href="add_product.php" class="button">Add Product</a></li>';
 echo '</ul>';
@@ -134,9 +139,10 @@ echo '</ul>';
 	<h4>Description: <?php echo utf8_encode($product['desc']);?></h4>
 	</div>	
 	<div class="inforight">
-	
+	<a href="edit_product.php?id=<?php echo $product['id'];?>" class="button">Edit Product</a>
+	<p>
+	<p>
 	<a href="delete.php?id=<?php echo $product['id'];?>" onclick="return confirm('Ta bort produkt?')" class="button">Remove Product</a>
-	
 	<h4>Name: <?php echo $product['name']; ?></h4>
 	</div>
 </div>
