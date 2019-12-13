@@ -85,7 +85,7 @@ if($result->num_rows > 0){
         }
 
 </style>
-<div class="container">
+<div class="container" style="overflow:auto">
 <?php
 // sql shit get all products
 require("db.php");

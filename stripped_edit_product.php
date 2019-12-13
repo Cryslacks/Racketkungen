@@ -17,6 +17,7 @@ if($result->num_rows > 0){
 	$product["price"] = $row["pprice"];
 	$product["q"] 	  = $row["pquantity"];
 	$product["pic"]   = $row["picture"];
+	$product["sale"]   = $row["sale"];
 }
 
 ?>
@@ -53,6 +54,14 @@ if($result->num_rows > 0){
 					<h5 style="padding:5px;margin-top:5px;">Quantity</h5>
 					<div class="wrap-input100 rs1 validate-input" data-validate="Quantity is required">
 						<input class="input100" type="text" name="equant" placeholder="Quantity" value="<?php echo $product['q']; ?>">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+
+
+					<h5 style="padding:5px;margin-top:5px;">Sale</h5>
+					<div class="wrap-input100 rs1 validate-input" data-validate="Sale is required">
+						<input class="input100" type="text" name="esale" placeholder="Sale" value="<?php echo $product['sale']; ?>">
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 					</div>

@@ -5,7 +5,7 @@ if(empty($_SESSION["id"]))
         echo "error_need_login";
 else if($_SESSION["rank"] < 2)
         echo "error_no_permission";
-else if(!empty($_POST['ename']) && !empty($_POST['edesc']) && !empty($_POST['eprice']) && !empty($_POST['equant']) && !empty($_POST['eid']) && !empty($_FILES['file']['name'])){
+else if(!empty($_POST['ename']) && !empty($_POST['edesc']) && !empty($_POST['eprice']) && !empty($_POST['equant']) && !empty($_POST['eid']) && !empty($_FILES['file']['name']) && !empty($_POST['esale'])){
 	require("db.php");
 
 	$file_name = $_FILES['file']['name'];
@@ -21,8 +21,9 @@ else if(!empty($_POST['ename']) && !empty($_POST['edesc']) && !empty($_POST['epr
 	$desc = utf8_decode($_REQUEST['edesc']);
 	$price = $_REQUEST['eprice'];
 	$quant = $_REQUEST['equant'];
+	$sale = $_REQUEST['esale'];
 
-	mysqli_query($db, "UPDATE products SET pname='$name', description='$desc', pprice='$price', pquantity='$quant', picture='$file_name' WHERE product_id='$id'");
+	mysqli_query($db, "UPDATE products SET pname='$name', description='$desc', pprice='$price', pquantity='$quant', picture='$file_name',sale='$sale' WHERE product_id='$id'");
 	$id = mysqli_fetch_assoc(mysqli_query($db, "SELECT product_id FROM products WHERE pname='$name'"))["product_id"];
 	echo "success;".$id;
 }else if (!empty($_POST['ename']) && !empty($_POST['edesc']) && !empty($_POST['eprice']) && !empty($_POST['equant']) && !empty($_POST['eid'])){
@@ -33,8 +34,9 @@ else if(!empty($_POST['ename']) && !empty($_POST['edesc']) && !empty($_POST['epr
 	$desc = utf8_decode($_REQUEST['edesc']);
 	$price = $_REQUEST['eprice'];
 	$quant = $_REQUEST['equant'];
+	$sale = $_REQUEST['esale'];
 
-	mysqli_query($db, "UPDATE products SET pname='$name', description='$desc', pprice='$price', pquantity='$quant' WHERE product_id='$id'");
+	mysqli_query($db, "UPDATE products SET pname='$name', description='$desc', pprice='$price', pquantity='$quant',sale='$sale' WHERE product_id='$id'");
 	$id = mysqli_fetch_assoc(mysqli_query($db, "SELECT product_id FROM products WHERE pname='$name'"))["product_id"];
 	echo "success;".$id;
 }else{

@@ -16,6 +16,7 @@ if($result->num_rows > 0){
 	$product["price"] = $row["pprice"];
 	$product["q"] 	  = $row["pquantity"];
 	$product["pic"]   = $row["picture"];
+	$product["sale"]  = $row["sale"];
 }
 ?>
 
@@ -31,21 +32,27 @@ if($result->num_rows > 0){
 		?></span></div>
        		<div class="panel-body">
 			<div style="float:left;width: 40%;">
-				<img src="images/<?php echo $product['pic'];?>" class="img-responsive" style="width:80%;margin:auto;" alt="Image">
+				<img  src="images/<?php echo $product['pic'];?>" class="img-responsive" style="width:80%;margin:auto;" alt="Image">
 			</div>
 			<div style="float:left;">
 				<?php
-					echo "<h3 style='width:160px;float:right;text-align:center;padding: 5px;border-radius: 5px;color:white;background-color:".($product['q'] > 1 ? 'green' : 'red')."'>".($product['q'] > 1 ? 'In stock' : 'Out of stock')."</h3>"; 
+					echo "<h3 id='product_status'style='width:160px;float:right;text-align:center;padding: 5px;border-radius: 5px;color:white;background-color:".($product['q'] > 1 ? 'green' : 'red')."'>".($product['q'] > 1 ? 'In stock' : 'Out of stock')."</h3>"; 
 				?>
 				<h3>Name: <?php echo $product['name']; ?></h3>
-				<h3>Price: <?php echo $product['price']; ?>kr</h3>
+				<?php
+					if(!empty($_SESSION["id"]) && $_SESSION["id"] == 20 && $product["id"] == 46)
+						$js = ' onclick="sale_hype()" id="sale_hype"';
+					else
+						$js = "";
+				?>
+				<h3>Price: <?php echo (($product['sale'] > 0 ? "<span style=text-decoration:line-through>".$product['price']." kr</span> ".($product['price']-($product['price']*($product['sale']/100)))." kr <span style='border-radius:5px;background-color:red;padding:5px;'".$js.">".$product['sale']."%</span>" : $product['price']." kr")); ?></h3>
 				<h4 style="width: 600px;height: 100px;margin-top:30px;"><?php echo utf8_encode($product['desc']);?></h4>
 			</div>
 		</div>
 	       	<div class="panel-footer" style="overflow: hidden" onkeypress="keyHandler(event, 'product')">
 			<form>
 				<input type="hidden" value="<?php echo $product['id']; ?>" name="id" id="pid"/>
-				<input type="hidden" value="<?php echo $product['price']; ?>" name="price" id="price"/>
+				<input type="hidden" value="<?php echo ($product['price']-($product['price']*($product['sale']/100))); ?>" name="price" id="price"/>
 				<p style="float:left;margin-left:20%;margin-top:8px;margin-right:5px;">Quantity:</p><input type="number" value=1 name="quantity" min=1 max=<?php echo $product['q'];?> style="width: 20%;float:left;padding: 5px;margin-top:5px;border:1px solid gray;" id="q"/>
 				<?php
 				if(!empty($_SESSION["id"]) && $_SESSION["rank"] > 1)

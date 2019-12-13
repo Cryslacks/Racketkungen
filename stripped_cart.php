@@ -64,7 +64,7 @@
 																$_SESSION["cart_total"] += $row[price]*$row[quantity];
 																		echo '<tr id="product-'.$prod_id.'">
 																			<td style="width:75px"> <a href="product.php?id='.$prod_id.'"> <img src="images/'.$row2["picture"].'" class="img-responsive" alt="Image" Style="scale:5%"/> </a> </td>
-																			<td style="padding-top: 25px;"> <a href="product.php?id='.$prod_id.'">'.$row2["pname"]. '</a> </td>
+																			<td style="padding-top: 25px;"> <a onclick="openTab(`product`,'.$prod_id.')" style="cursor:pointer">'.$row2["pname"]. '</a> </td>
 																			<td style="padding-top: 25px;">'.($row2["pquantity"] > 1 ? 'In stock' : 'Out of stock').'</td>
 																			<td style="width:30px; padding-top: 20px;"><input class="form-control" type="number" min="1" value='.$row["quantity"]. ' onchange="update_items_in_cart('.$prod_id.', '.$id.', `qchange'.$i.'`)" id="qchange'.$i.'"></td>
 																			<td class="text-right" style="padding-top: 25px;" id="product-'.$prod_id.'-price">'.$row[price] * $row[quantity].' kr</td>
