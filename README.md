@@ -26,4 +26,4 @@ A php file for handling SQL querying and checking if the provided creation detai
 A php file for handling session reseting for when you are signed in
 
 ### debug.php
-Just a simple debug file for easy loging into the root administration account, **WILL BE REMOVED ON DEPLOYMENT OF THE WEBSITE**
+Just a simple debug file for easy loging into the root administration account. **WILL BE REMOVED ON DEPLOYMENT OF THE WEBSITE**
